@@ -7,15 +7,38 @@ html, body, #map {
     height: 100%;
 }
 
-.add_button {
-    position: absolute;
-    right: 10%;
-    bottom: 10%;
-    font-size: 2em;
-    border-radius: 1.5em;    
-    border: 1px solid blue;
-    background-color: blue;
-    color: white;
-    width: 1.2em;
-    text-align: center;
+.panel {
+  top: 50px;
+  right: 50px;
+  left: auto;  
+}
+
+
+
+/*
+.AddButton:after {
+  content: "+";
+}
+*/
+
+.olControlPanel {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+}
+
+.olControlCustomButtonItemInactive {
+  /* right: 10%; */
+  font-size: 2em;
+  border-radius: 1.5em;    
+  border: 1px solid blue;
+  background-color: blue;
+  color: white;
+  width: 1.2em;
+  text-align: center;  
+  display: block;
+}
+
+.olControlCustomButtonItemInactive:after {
+  content: "+";
 }
