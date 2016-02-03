@@ -1,7 +1,7 @@
 // This is a JavaScript file
 
-var application_key = "01cd93385934a7aaef6e3b6f385051d4fb4714ca26bc062d55689df1a7dcda89";
-var client_key = "87ffe8898bfe990c2fe291636feafe3fb5b1eac1422be2b5b22c9d7e2bca0767";
+var application_key = "YOUR_APPLICATION_KEY";
+var client_key = "YOUR_CLIENT_KEY";
 
 var ncmb = new NCMB(application_key, client_key);
 var Places = ncmb.DataStore("Places");
@@ -16,50 +16,37 @@ var popup = null;
 var ncmbController = {
   run: function() {
     var self = this;
-    // ç¾åœ¨ä½ç½®ã‚’å–å¾—ã—ã¾ã™
+    // Œ»İˆÊ’u‚ğæ“¾‚µ‚Ü‚·
     navigator.geolocation.getCurrentPosition(function(location) {
-      // ç¾åœ¨ä½ç½®ã‚’å–å¾—ã™ã‚‹ã¨ã€locationã¨ã„ã†å¤‰æ•°ã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã‚Šã¾ã™
-      // ä½ç½®æƒ…å ±ã‚’ä½¿ã£ã¦ã€OpenLayersã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›ã—ã¾ã™
-      // ãã®éš›ã€EPSG:4326ã‹ã‚‰EPSG:3857ã«å¤‰æ›ã™ã‚‹æŒ‡å®šã‚’è¡Œã„ã¾ã™
+      // Œ»İˆÊ’u‚ğæ“¾‚·‚é‚ÆAlocation‚Æ‚¢‚¤•Ï”‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚ª“ü‚è‚Ü‚·
+      // ˆÊ’uî•ñ‚ğg‚Á‚ÄAOpenLayers‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚É•ÏŠ·‚µ‚Ü‚·
+      // ‚»‚ÌÛAEPSG:4326‚©‚çEPSG:3857‚É•ÏŠ·‚·‚éw’è‚ğs‚¢‚Ü‚·
       var lonLat = new OpenLayers.LonLat(location.coords.longitude, location.coords.latitude)
        .transform(
          projection4326,
          projection3857
       );
-      // ä½œæˆã—ãŸä½ç½®æƒ…å ±ã‚’åœ°å›³ã®ä¸­å¤®ã«è¨­å®šã—ã¾ã™
+      // ì¬‚µ‚½ˆÊ’uî•ñ‚ğ’n}‚Ì’†‰›‚Éİ’è‚µ‚Ü‚·
       map.setCenter(lonLat, 15);
       
-      // ãƒãƒ¼ã‚«ãƒ¼ã‚’æ¤œç´¢ã™ã‚‹å‡¦ç†ã§ã™
+      // ƒ}[ƒJ[‚ğŒŸõ‚·‚éˆ—‚Å‚·
       ncmbController.findMarkers(location.coords.latitude, location.coords.longitude);
       
-      // ãƒœã‚¿ãƒ³ã‚’è¿½åŠ ã™ã‚‹å‡¦ç†ã§ã™
+      // ƒ{ƒ^ƒ“‚ğ’Ç‰Á‚·‚éˆ—‚Å‚·
       ncmbController.addButton();
     });
   },
 
   findMarkers: function(latitude, longitude) {
-    // mBaaSã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
-    var current_position = new ncmb.GeoPoint(latitude, longitude);
-    Places
-      .withinKilometers("point", current_position, 1000)
-      .limit(20)
-      .fetchAll()
-      .then(function(places) {
-        for (var i = 0; i < places.length; i++) {
-          var place = places[i];
-          ncmbController.addMarker(place.areaName, place.point.latitude, place.point.longitude);
-        }
-      })
-      .catch(function(err) {
-        alert("ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ");
-      });
+    // mBaaS‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚ğì¬
+    
   },
   addMarker: function(areaName, latitude, longitude) {
-    // ãƒãƒ¼ã‚«ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æº–å‚™
+    // ƒ}[ƒJ[‚ğ•\¦‚·‚é‚½‚ß‚ÌƒŒƒCƒ„[‚ğ€”õ
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
     
-    // ãƒãƒ¼ã‚«ãƒ¼ã‚’ä½œæˆ
+    // ƒ}[ƒJ[‚ğì¬
     var marker = new OpenLayers.Marker(
       new OpenLayers.LonLat(longitude, latitude)
       .transform(
@@ -67,24 +54,24 @@ var ncmbController = {
         projection3857
       )
     );
-    // ãƒãƒ¼ã‚«ãƒ¼ã®ã‚¿ã‚°ã¨ã—ã¦ã‚¨ãƒªã‚¢åã‚’æŒ‡å®š
+    // ƒ}[ƒJ[‚Ìƒ^ƒO‚Æ‚µ‚ÄƒGƒŠƒA–¼‚ğw’è
     marker.tag = areaName;
     
-    // ãƒãƒ¼ã‚«ãƒ¼ã‚’ã‚¿ãƒƒãƒ—ã—ãŸéš›ã«ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’è¡¨ç¤ºã—ã¾ã™
+    // ƒ}[ƒJ[‚ğƒ^ƒbƒv‚µ‚½Û‚Éƒ|ƒbƒvƒAƒbƒv‚ğ•\¦‚µ‚Ü‚·
     marker.events.register("touchstart", marker, function(event) {
-      // ã™ã§ã«åˆ¥ãªãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãŒé–‹ã„ã¦ã„ãŸã‚‰æ¶ˆã—ã¾ã™
+      // ‚·‚Å‚É•Ê‚Èƒ|ƒbƒvƒAƒbƒv‚ªŠJ‚¢‚Ä‚¢‚½‚çÁ‚µ‚Ü‚·
       if (popup) map.removePopup(popup);
-      // ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’ä½œæˆ
+      // ƒ|ƒbƒvƒAƒbƒv‚ğì¬
       popup = new OpenLayers.Popup("chicken",
            event.object.lonlat,
            new OpenLayers.Size(100,50),
            event.object.tag,
            true);
-      // ä½œæˆã—ãŸãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’åœ°å›³ã«è¿½åŠ ã—ã¾ã™
+      // ì¬‚µ‚½ƒ|ƒbƒvƒAƒbƒv‚ğ’n}‚É’Ç‰Á‚µ‚Ü‚·
       map.addPopup(popup);
     });
     
-    // ä½œæˆã—ãŸãƒãƒ¼ã‚«ãƒ¼ã‚’åœ°å›³ï¼ˆãƒãƒ¼ã‚«ãƒ¼ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‰ã«è¿½åŠ ã—ã¾ã™
+    // ì¬‚µ‚½ƒ}[ƒJ[‚ğ’n}iƒ}[ƒJ[ƒŒƒCƒ„[j‚É’Ç‰Á‚µ‚Ü‚·
     markers.addMarker(marker);
   },
 
@@ -99,21 +86,8 @@ var ncmbController = {
   },
 
   createPlace: function() {
-    // ã‚¨ãƒªã‚¢åã®å…¥åŠ›ã‚’ä¿ƒã™
-    var areaName = prompt("å ´æ‰€ã®åå‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
-    navigator.geolocation.getCurrentPosition(function(location) {
-      var geoPoint = new ncmb.GeoPoint(location.coords.latitude, location.coords.longitude);
-      var place = new Places();
-      place.set("areaName", areaName);
-      place.set("point", geoPoint);
-      place.save()
-        .then(function(point) {
-          ncmbController.addMarker(point);
-        })
-        .catch(function(err) {
-          alert("ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚å†åº¦è¡Œã£ã¦ãã ã•ã„") 
-        });
-    });
+    // ƒGƒŠƒA–¼‚Ì“ü—Í‚ğ‘£‚·
+
   }
 };
 
