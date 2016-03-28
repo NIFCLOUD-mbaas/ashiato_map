@@ -16,37 +16,37 @@ var popup = null;
 var ncmbController = {
   run: function() {
     var self = this;
-    // Œ»İˆÊ’u‚ğæ“¾‚µ‚Ü‚·
+    // ç¾åœ¨ä½ç½®ã‚’å–å¾—ã—ã¾ã™
     navigator.geolocation.getCurrentPosition(function(location) {
-      // Œ»İˆÊ’u‚ğæ“¾‚·‚é‚ÆAlocation‚Æ‚¢‚¤•Ï”‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚ª“ü‚è‚Ü‚·
-      // ˆÊ’uî•ñ‚ğg‚Á‚ÄAOpenLayers‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚É•ÏŠ·‚µ‚Ü‚·
-      // ‚»‚ÌÛAEPSG:4326‚©‚çEPSG:3857‚É•ÏŠ·‚·‚éw’è‚ğs‚¢‚Ü‚·
+      // ç¾åœ¨ä½ç½®ã‚’å–å¾—ã™ã‚‹ã¨ã€locationã¨ã„ã†å¤‰æ•°ã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã‚Šã¾ã™
+      // ä½ç½®æƒ…å ±ã‚’ä½¿ã£ã¦ã€OpenLayersã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›ã—ã¾ã™
+      // ãã®éš›ã€EPSG:4326ã‹ã‚‰EPSG:3857ã«å¤‰æ›ã™ã‚‹æŒ‡å®šã‚’è¡Œã„ã¾ã™
       var lonLat = new OpenLayers.LonLat(location.coords.longitude, location.coords.latitude)
        .transform(
          projection4326,
          projection3857
       );
-      // ì¬‚µ‚½ˆÊ’uî•ñ‚ğ’n}‚Ì’†‰›‚Éİ’è‚µ‚Ü‚·
+      // ä½œæˆã—ãŸä½ç½®æƒ…å ±ã‚’åœ°å›³ã®ä¸­å¤®ã«è¨­å®šã—ã¾ã™
       map.setCenter(lonLat, 15);
       
-      // ƒ}[ƒJ[‚ğŒŸõ‚·‚éˆ—‚Å‚·
+      // ãƒãƒ¼ã‚«ãƒ¼ã‚’æ¤œç´¢ã™ã‚‹å‡¦ç†ã§ã™
       ncmbController.findMarkers(location.coords.latitude, location.coords.longitude);
       
-      // ƒ{ƒ^ƒ“‚ğ’Ç‰Á‚·‚éˆ—‚Å‚·
+      // ãƒœã‚¿ãƒ³ã‚’è¿½åŠ ã™ã‚‹å‡¦ç†ã§ã™
       ncmbController.addButton();
     });
   },
 
   findMarkers: function(latitude, longitude) {
-    // mBaaS‚ÌˆÊ’uî•ñƒIƒuƒWƒFƒNƒg‚ğì¬
+    // mBaaSã®ä½ç½®æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     
   },
   addMarker: function(areaName, latitude, longitude) {
-    // ƒ}[ƒJ[‚ğ•\¦‚·‚é‚½‚ß‚ÌƒŒƒCƒ„[‚ğ€”õ
+    // ãƒãƒ¼ã‚«ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æº–å‚™
     var markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
     
-    // ƒ}[ƒJ[‚ğì¬
+    // ãƒãƒ¼ã‚«ãƒ¼ã‚’ä½œæˆ
     var marker = new OpenLayers.Marker(
       new OpenLayers.LonLat(longitude, latitude)
       .transform(
@@ -54,24 +54,24 @@ var ncmbController = {
         projection3857
       )
     );
-    // ƒ}[ƒJ[‚Ìƒ^ƒO‚Æ‚µ‚ÄƒGƒŠƒA–¼‚ğw’è
+    // ãƒãƒ¼ã‚«ãƒ¼ã®ã‚¿ã‚°ã¨ã—ã¦ã‚¨ãƒªã‚¢åã‚’æŒ‡å®š
     marker.tag = areaName;
     
-    // ƒ}[ƒJ[‚ğƒ^ƒbƒv‚µ‚½Û‚Éƒ|ƒbƒvƒAƒbƒv‚ğ•\¦‚µ‚Ü‚·
+    // ãƒãƒ¼ã‚«ãƒ¼ã‚’ã‚¿ãƒƒãƒ—ã—ãŸéš›ã«ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’è¡¨ç¤ºã—ã¾ã™
     marker.events.register("touchstart", marker, function(event) {
-      // ‚·‚Å‚É•Ê‚Èƒ|ƒbƒvƒAƒbƒv‚ªŠJ‚¢‚Ä‚¢‚½‚çÁ‚µ‚Ü‚·
+      // ã™ã§ã«åˆ¥ãªãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãŒé–‹ã„ã¦ã„ãŸã‚‰æ¶ˆã—ã¾ã™
       if (popup) map.removePopup(popup);
-      // ƒ|ƒbƒvƒAƒbƒv‚ğì¬
+      // ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’ä½œæˆ
       popup = new OpenLayers.Popup("chicken",
            event.object.lonlat,
            new OpenLayers.Size(100,50),
            event.object.tag,
            true);
-      // ì¬‚µ‚½ƒ|ƒbƒvƒAƒbƒv‚ğ’n}‚É’Ç‰Á‚µ‚Ü‚·
+      // ä½œæˆã—ãŸãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’åœ°å›³ã«è¿½åŠ ã—ã¾ã™
       map.addPopup(popup);
     });
     
-    // ì¬‚µ‚½ƒ}[ƒJ[‚ğ’n}iƒ}[ƒJ[ƒŒƒCƒ„[j‚É’Ç‰Á‚µ‚Ü‚·
+    // ä½œæˆã—ãŸãƒãƒ¼ã‚«ãƒ¼ã‚’åœ°å›³ï¼ˆãƒãƒ¼ã‚«ãƒ¼ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‰ã«è¿½åŠ ã—ã¾ã™
     markers.addMarker(marker);
   },
 
@@ -86,7 +86,7 @@ var ncmbController = {
   },
 
   createPlace: function() {
-    // ƒGƒŠƒA–¼‚Ì“ü—Í‚ğ‘£‚·
+    // ã‚¨ãƒªã‚¢åã®å…¥åŠ›ã‚’ä¿ƒã™
 
   }
 };
