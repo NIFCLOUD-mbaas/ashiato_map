@@ -1,8 +1,22 @@
-JavaScript SDK for NiftyCloud mobile backend
+JavaScript SDK for NIF Cloud mobile backend
 ------------------------------------------------------------
-[![Build Status](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFTYCloud-mbaas/ncmb_js)
-[![Coverage Status](https://coveralls.io/repos/NIFTYCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFTYCloud-mbaas/ncmb_js?branch=apply_coveralls)
-[![Code Climate](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFTYCloud-mbaas/ncmb_js)
+[![Build Status](https://travis-ci.org/NIFCloud-mbaas/ncmb_js.png)](https://travis-ci.org/NIFCloud-mbaas/ncmb_js)
+[![Coverage Status](https://coveralls.io/repos/NIFCloud-mbaas/ncmb_js/badge.svg?branch=apply_coveralls&service=github)](https://coveralls.io/github/NIFCloud-mbaas/ncmb_js?branch=apply_coveralls)
+[![Code Climate](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js/badges/gpa.svg)](https://codeclimate.com/github/NIFCloud-mbaas/ncmb_js)
+
+## Supported environment
+
+| Environment              | Supported version |
+|:---                  |:---        |
+| Node.js              | 6.x, 8.x |
+| Mozilla Firefox      | Latest version     |
+| Google Chrome        | Latest version     |
+
+## Support desk coverage version
+
+Please read [Developer guidelines](https://mbaas.nifcloud.com/doc/current/common/dev_guide.html#SDK%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
+
+- v2.1.5 ～ (※as of August, 2018)
 
 ## Install
 
@@ -248,12 +262,55 @@ $ browserify -r -p licensify -t [ uglifyify -x .js ] -o ncmb.min.js lib/ncmb.js
 ## For Developer
 
 ```shell
-$ git clone XXX
-$ cd javascript-sdk-mbaas
+$ git clone https://github.com/NIFCloud-mbaas/ncmb_js
+$ cd ncmb_js
 $ npm install
-$ npm run stub:start
 $ npm test
 ```
+
+npm test is not working on default Windows OS environment.
+If you want to do that, please setup nohup command.
+
+## Automated Test On Frontend
+1. Generate test files
+```shell
+$ npm run build                 # if library is updated, frontend test need to update ncmb.min.js
+$ npm run test:frontend:modules # run only once at the first time
+$ npm run test:frontend:prepare # generate test files at test/frontend/www
+```
+2. Make app on mBaaS
+3. Change anonymous user flag from disable to enable in application setting page
+4. Files exists as below after npm commands
+5. Set Appkey and Secretkey in config.js
+6. Run index.html on browser
+7. Run application in Monaca (Upload files as below)
+
+#### Directory Structure On Browser
+```
+(Any directory)/
+ ├ index.html
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
+ └css/
+   └mocha.css
+```
+
+#### Directory Structure On Monaca
+```
+www/
+ ├ index.html //overwrite
+ ├ ncmb.min.js
+ ├ ncmb.test.full.js
+ ├ config.js
+ └css/
+   └mocha.css
+```
+
+## Create SDK Document
+
+Run `npm run document:generate` command, then documents has created in `jsdoc` directory.
+
 ## License
 
-Please read [LICENSE](git://github.com/NIFTYCloud-mbaas/ncmb_js/blob/master/LICENSE).
+Please read [LICENSE](https://github.com/NIFCloud-mbaas/ncmb_js/blob/master/LICENSE).
